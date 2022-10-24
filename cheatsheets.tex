@@ -1,4 +1,4 @@
-% -----------------------------------------------------------------------------
+% % -----------------------------------------------------------------------------
 % Taichi cheat sheet - Released under the BSD License
 % -----------------------------------------------------------------------------
 \documentclass[10pt,landscape,a4paper]{article}
@@ -6,6 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{tabular}
 \usepackage{tabularx}
+\usepackage{listings}
 
 
 % --- Page layout -------------------------------------------------------------
@@ -277,7 +278,7 @@
   %\vspace{\fill}
 
   % --- Summary -----------------------------------------------------------
-  \begin{myboxed}{Taichi in a Nutshell \hfill}
+  \begin{myboxed}{Taichi in a Nutshell}
   
   \begin{itemize}
   \item A domain specific language embedded in Python for high-performance parallel computing
@@ -290,19 +291,22 @@
   \vspace{\fill}
 
   % --- Quick start -----------------------------------------------------------
-  \begin{myboxed}{Hello, World! \hfill}
+  \begin{myboxed}{Hello, World!}
 
   \begin{enumerate}
   \item Install Taichi
-  {\ttfamily \scriptsize
-  pip install -U taichi}
+  \begin{lstlisting}
+  pip install -U taichi
+  \end{lstlisting}
   \item Verify installation - Taichi examples
-  {\ttfamily \scriptsize
-  ti example}
+  \begin{lstlisting}
+  ti example
+  \end{lstlisting}
   \item Write your first Taichi program
-  {\ttfamily \scriptsize
-  import taichi as ti \\
-  ti.init(arch=ti.cpu)}
+ \begin{lstlisting}[language=Python]
+  import taichi as ti
+  ti.init(arch=ti.cpu)
+  \end{lstlisting}
   Note:
   \begin{itemize}
     \item A backend can be either \verb|ti.cpu| or \verb|ti.gpu|
@@ -339,14 +343,14 @@
   \vspace{\fill}
 
   % --- Data Types ---------------------------------------------------------------
-  \begin{myboxed}{Data Types \hfill}
+  \begin{myboxed}{Data Types}
 
   \textbf{Primitive data types:}
     
   \verb|i8|,	\verb|i16|,	\verb|i32|,	\verb|i64|,	\verb|u8|,	\verb|u16|,	\verb|u32|,	\verb|u64|,	\verb|f16|,	\verb|f32|,	\verb|f64|
     
   \begin{tabular}{ |c|c|c| }
-    \includegraphics[width=0.3\columnwidth]{i32.pdf} & \includegraphics[width=0.3\columnwidth]{u16.pfd} & \includegraphics[width=0.3\columnwidth]{f64.pdf} \\
+    \includegraphics[width=0.3\columnwidth]{i32.pdf} &  & \includegraphics[width=0.3\columnwidth]{f64.pdf} \\
     \end{tabular}
 
   \begin{itemize}
@@ -355,26 +359,30 @@
   Default integer type: ti.i32 
   Default floating-point type: ti.f32
   To set the default integer type to ti.i64:
-  {\ttfamily \scriptsize
-  ti.init(default_ip=ti.i64)}
+  \begin{lstlisting}[language=Python]
+  ti.init(default_ip=ti.i64)
+  \end{lstlisting}
   To set the default floating-point type to ti.f64
-  {\ttfamily \scriptsize
-  ti.init(default_fp=ti.f64)}
+  \begin{lstlisting}[language=Python]
+  ti.init(default_fp=ti.f64)
+  \end{lstlisting}
 
   \item Explicit type casting:
 
   Use ti.cast():
-  {\ttfamily \scriptsize
-  a = 3.14 \\
-  b = ti.cast(a, ti.i32)  # 3 \\
-  c = ti.cast(b, ti.f32)  # 3.0}
+  \begin{lstlisting}[language=Python]
+  a = 3.14 
+  b = ti.cast(a, ti.i32)  # 3
+  c = ti.cast(b, ti.f32)  # 3.0
+  \end{lstlisting}
   Use primitive types to convert a scalar variable to a different scalar type:
-  {\ttfamily \scriptsize
-  a = 3.14 \\
-  x = int(a)    # 3 \\
-  y = float(a)  # 3.14 \\
-  z = ti.i32(a) # 3 \\
-  w = ti.f64(a) # 3.14}
+  \begin{lstlisting}[language=Python]
+  a = 3.14
+  x = int(a)    # 3
+  y = float(a)  # 3.14
+  z = ti.i32(a) # 3
+  w = ti.f64(a) # 3.14
+  \end{lstlisting}
 
   \item Implicit type casting:
   \textit{Integer + floating point -> floating point}
@@ -391,37 +399,46 @@
   \item Vectors and matrices:
 
   To create a 64-bit floating-point 4D vector type:
-  {\ttfamily \scriptsize
-  vec4d = ti.types.vector(4, ti.f64)}
+  \begin{lstlisting}[language=Python]
+  vec4d = ti.types.vector(4, ti.f64)
+  \end{lstliting}
   To create a 4x3 integer matrix type:
-  {\ttfamily \scriptsize
-  mat4x3i = ti.types.matrix(4, 3, int)}
+  \begin{lstlisting}[language=Python]
+  mat4x3i = ti.types.matrix(4, 3, int)
+  \end{lstliting}
   To create a vector instance v = vec4d(1, 2, 3, 4):
-  {\ttfamily \scriptsize
-  v = [1.0 2.0 3.0 4.0]}
+ \begin{lstlisting}[language=Python]
+  v = [1.0 2.0 3.0 4.0]
+  \end{lstlisting}
 
   \item Structs:
 
   To defines a compound type for representing a sphere's center:
-  {\ttfamily \scriptsize
-  vec3 = ti.types.vector(3, float)}
+  \begin{lstlisting}[language=Python]
+  vec3 = ti.types.vector(3, float)
+  \end{lstlisting}
   To defines a compound type for representing a sphere:
-  {\ttfamily \scriptsize
-  sphere_type = ti.types.struct(center=vec3, radius=float) \\
-  sphere = sphere_type(center=vec3(0), radius=1.0)}
+  \begin{lstlisting}[language=Python]
+  sphere_type = ti.types.struct(center=vec3, radius=float)
+  sphere = sphere_type(center=vec3(0), radius=1.0)
+  \end{lstlisting}
 
   \end{itemize}
 
   \textbf{Quantized/low-precision data types:}
   To define a 5-bit unsigned integer:
-  {\ttfamily \scriptsize
-  u5 = ti.types.quant.int(bits=5, signed=False)}
+   \begin{lstlisting}[language=Python]
+   u5 = ti.types.quant.int(bits=5, signed=False)
+   \end{lstlisting}
   To define a 10-bit signed fixed point type within the range [-20.0, 20.0]:
-  {\ttfamily \scriptsize
-  fixed_type_a = ti.types.quant.fixed(bits=10, max_value=20.0)}
+  \begin{lstlisting}[language=Python]
+  fixed_type_a = ti.types.quant.fixed(bits=10, max_value=20.0)
+  \end{lstlisting}
   To define a 15-bit unsigned floating-point type with six exponent bits:
-  {\ttfamily \scriptsize
-  float_type_b = ti.types.quant.float(exp=6, frac=9, signed=False)}
+   \begin{lstlisting}[language=Python]
+  float_type_b = ti.types.quant.float(exp=6, frac=9, signed=False)
+  \end{lstlisting}
+  
 
   \end{myboxed}
   %
@@ -436,53 +453,62 @@
   \item Declare:
 
   To declare a scalar field:
-  {\ttfamily \scriptsize
-  scalar_field = ti.field(int, shape=(640, 480))}
+  \begin{lstlisting}[language=Python]
+  scalar_field = ti.field(int, shape=(640, 480))
+  \end{lstlisting}
   To declare a vector field:
-  {\ttfamily \scriptsize
-  vector_field = ti.Vector.field(n=2, dtype=float, shape=(1,2,3))}
+  \begin{lstlisting}[language=Python]
+  vector_field = ti.Vector.field(n=2, dtype=float, shape=(1,2,3))
+  \end{lstlisting}
   To declare a matrix field:
-  {\ttfamily \scriptsize
-  matrix_field = ti.Matrix.field(n=3, m=2, dtype=float, shape=(300, 400, 500))}
+  \begin{lstlisting}[language=Python]
+  matrix_field = ti.Matrix.field(n=3, m=2, dtype=float, shape=(300, 400, 500))
+  \end{lstlisting}
 
   \item Access:
-  {\ttfamily \scriptsize
-  f_0d = ti.field(float, shape=()) \\
-  f_0d[None] = 1.0 \\
-  f_1d = ti.field(int, shape=10) \\
-  f_1d[5] = 1 \\
-  f_2d = ti.field(int, shape=(10, 10)) \\
-  f_2d[1, 2] = 255 \\
-  f_3d = ti.Vector.field(3, float, shape=(10, 10, 10)) \\
-  f_3d[3, 3, 3] = 1, 2, 3 \\
-  f_3d[3, 3, 3][0] = 1}
+  \begin{lstlisting}[language=Python]
+  f_0d = ti.field(float, shape=())
+  f_0d[None] = 1.0
+  f_1d = ti.field(int, shape=10)
+  f_1d[5] = 1
+  f_2d = ti.field(int, shape=(10, 10))
+  f_2d[1, 2] = 255
+  f_3d = ti.Vector.field(3, float, shape=(10, 10, 10))
+  f_3d[3, 3, 3] = 1, 2, 3
+  f_3d[3, 3, 3][0] = 1
+  \end{lstlisting}
 
   \item Interact with external arrays:
   To export data in Taichi fields to NumPy arrays:
-  {\ttfamily \scriptsize
-  x_np = x.to_numpy()}
+  \begin{lstlisting}[language=Python]
+  x_np = x.to_numpy()
+  \end{lstlisting}
   To import data from NumPy arrays to Taichi fields:
-  {\ttfamily \scriptsize
-  x.from_numpy(x_np)}
+  \begin{lstlisting}[language=Python]
+  x.from_numpy(x_np)
+  \end{lstlisting}
   To export data in Taichi fields to PyTorch tensors:
-  {\ttfamily \scriptsize
-  x_torch = x.to_torch()}
+  \begin{lstlisting}[language=Python]
+  x_torch = x.to_torch()
+  \end{lstlisting}
   To import data from PyTorch tensors to Taichi fields:
-  {\ttfamily \scriptsize
-  x.from_torch(torch.tensor([1, 7, 3, 5]))}
+  \begin{lstlisting}[language=Python]
+  x.from_torch(torch.tensor([1, 7, 3, 5]))
+  \end{lstlisting}
   To pass a NumPy ndarray to a kernel:
-  {\ttfamily \scriptsize
-  @ti.kernel \\
-  def numpy_as_ndarray(arr: ti.ndarray()): \\
-    for i in ti.ndrange(arr.shape[0]): \\
+  \begin{lstlisting}[language=Python]
+  @ti.kernel
+  def numpy_as_ndarray(arr: ti.ndarray()):
+    for i in ti.ndrange(arr.shape[0]):
         ...
-  }
+  \end{lstlisting}
 
   \item Ndarray: A multidimensional container of elements of the same type and size
-  {\ttfamily \scriptsize
-  pos = ti.Vector.ndarray(2, ti.f32, N) \\
-  vel = ti.Vector.ndarray(2, ti.f32, N) \\
-  force = ti.Vector.ndarray(2, ti.f32, N)}
+  \begin{lstlisting}[language=Python]
+  pos = ti.Vector.ndarray(2, ti.f32, N)
+  vel = ti.Vector.ndarray(2, ti.f32, N)
+  force = ti.Vector.ndarray(2, ti.f32, N)
+  \end{lstlisting}
 
   \end{itemize}
   \end{myboxed}
@@ -491,7 +517,7 @@
   %
 
   % --- Kernels and functions -----------------------------------------------------------
-  begin{myboxed}
+  \begin{myboxed}{Kernels and Functions}
   \textbf{Kernel:} An entry point where Taichi's runtime begins to take over computation tasks. The outermost for loops in a kernel are automatically parallelized.
 
   \textbf{Taichi function:} A building block of kernels. you can split your tasks into multiple Taichi functions to improve readability and reuse them in different kernels.
@@ -533,6 +559,7 @@
   Max. No. of return values        & 1    & Unlimited                \\
   \end{tabularx}
   \end{center}
+  
   \end{myboxed}
   %
   \vspace{\fill}
@@ -546,23 +573,25 @@
   %
 
   % --- Math ---------------------------------------------------------------
-  \begin{myboxed}{Math \hfill}
+  \begin{myboxed}{Math}
   \textbf{Import Taichi’s math module:}
-  {\ttfamily \scriptsize
-  import taichi.math as tm}
+  \begin{lstlisting}[language=Python]
+  import taichi.math as tm
+  \end{lstlisting}
 
   \textbf{The module supports the following:}
   \begin{itemize}
   \item Mathematical functions:
   
   \textit{Call mathematical functions in the Taichi scope}
-  {\ttfamily \scriptsize
-  @ti.kernel \\
-  def test(): \\
-      a = tm.vec3(1, 2, 3) \\
-      x = ti.sin(a) # [0.841471, 0.909297, 0.141120] \\
-      y = ti.floor(a) # [1.000000, 2.000000, 3.000000] \\
-      z = ti.degrees(a) # [57.295780, 114.591560, 171.887344]}
+  \begin{lstlisting}[language=Python]
+  @ti.kernel
+  def test():
+      a = tm.vec3(1, 2, 3)
+      x = ti.sin(a) # [0.841471, 0.909297, 0.141120]
+      y = ti.floor(a) # [1.000000, 2.000000, 3.000000]
+      z = ti.degrees(a) # [57.295780, 114.591560, 171.887344]
+  \end{lstlisting}
   
   \item Small vector and matrix types:
 
@@ -572,22 +601,24 @@
   \textit{mat2/mat3/mat4: 2D/3D/4D floating-point square matrix types}
   
   \item GLSL-standard functions:
-  {\ttfamily \scriptsize
-  @ti.kernel \\
-  def example(): \\
-    v = tm.vec3(0, 1, 2) \\
-    w = tm.smoothstep(0, 1, v) \\
-    w = tm.clamp(w, 0.2, 0.8) \\
-    w = tm.reflect(v, tm.normalize(tm.vec3(1)))}
+  \begin{lstlisting}[language=Python]
+  @ti.kernel
+  def example():
+    v = tm.vec3(0, 1, 2)
+    w = tm.smoothstep(0, 1, v)
+    w = tm.clamp(w, 0.2, 0.8)
+    w = tm.reflect(v, tm.normalize(tm.vec3(1)))
+  \end{lstlisting}
   
   \item Complex number operations in the form of 2D vectors:
-  {\ttfamily \scriptsize
-  @ti.kernel \\
-  def test(): \\
-    x = tm.vec2(1, 1) # Complex number 1+1j \\
-    y = tm.vec2(0, 1) # Complex number 1j \\
-    z = tm.cmul(x, y) # vec2(-1, 1) = -1+1j \\
-    w = tm.cdiv(x, y) # vec2(2, 0) = 2+0j}
+  \begin{lstlisting}[language=Python]
+  @ti.kernel
+  def test():
+    x = tm.vec2(1, 1) # Complex number 1+1j
+    y = tm.vec2(0, 1) # Complex number 1j
+    z = tm.cmul(x, y) # vec2(-1, 1) = -1+1j
+    w = tm.cdiv(x, y) # vec2(2, 0) = 2+0j
+  \end{lstlisting}
 
   \item Commonly used functions:
 
@@ -637,158 +668,173 @@
     \hline
   \end{tabularx}
   \end{center}
-
+  
   \end{myboxed}
   %
   \vspace{\fill}
   %
   % --- Data-oriented programming -------------------------------------------------------------
-  \begin{myboxed}{Data-oriented programming \hfill}
+  \begin{myboxed}{Data-oriented programming}
   
   \textbf{Data-oriented class:}
 
   A data-oriented class is used when your data is actively updated in the Python scope (such as current time and user input events) and tracked in Taichi kernels.
-  {\ttfamily \scriptsize
+  \begin{lstlisting}[language=Python]
   @ti.data_oriented
-  class TiArray: \\
-      def __init__(self, n): \\
-          self.x = ti.field(dtype=ti.i32, shape=n) \\
-    \\
-      @ti.kernel \\
-      def inc(self): \\
-          for i in self.x: \\
-              self.x[i] += 1 \\
+  class TiArray:
+      def __init__(self, n):
+          self.x = ti.field(dtype=ti.i32, shape=n)
+  
+      @ti.kernel
+      def inc(self):
+          for i in self.x:
+              self.x[i] += 1
 
-  a = TiArray(32) \\
-  a.inc()}
+  a = TiArray(32)
+  a.inc()
+  \end{lstlisting}
 
   \textbf{Taichi dataclass}
 
   A dataclass is a wrapper of `ti.types.struct`. You can define Taichi functions as its methods and call these methods in the Taichi scope.
-  {\ttfamily \scriptsize
-  @ti.dataclass \\
-  class Sphere: \\
-      center: vec3 \\
-      radius: float \\
+  \begin{lstlisting}[language=Python]
+  @ti.dataclass
+  class Sphere:
+      center: vec3
+      radius: float
     
-      @ti.func \\
+      @ti.func
       def area(self):
-          return 4 * math.pi * self.radius**2 \\
-    \\
-  @ti.kernel \\
-  def test(): \\
-      sphere = Sphere(vec3(0), radius=1.0) \\
-      print(sphere.area())}
-
+          return 4 * math.pi * self.radius**2
+   
+  @ti.kernel
+  def test():
+      sphere = Sphere(vec3(0), radius=1.0)
+      print(sphere.area())
+  \end{lstlisting}
   \end{myboxed}
   % --- Visualization -----------------------------------------------------------
   \begin{myboxed}{Visualization \hfill}
   \textbf{GUI system:}
-  {\ttfamily \scriptsize
-  gui = ti.GUI('Window Title', (640, 360)) \\
-  while not gui.get_event(ti.GUI.ESCAPE, ti.GUI.EXIT): \\
-    gui.show() # Displays the window}
+  \begin{lstlisting}[language=Python]
+  gui = ti.GUI('Window Title', (640, 360))
+  while not gui.get_event(ti.GUI.ESCAPE, ti.GUI.EXIT):
+    gui.show() # Displays the window
+  \end{lstlisting}
 
   \textbf{GGUI system:}
-  {\ttfamily \scriptsize
-  pixels = ti.Vector.field(3, float, (640, 480)) \\
-  window = ti.ui.Window("Window Title", (640, 360)) \\
-  canvas = window.get_canvas() \\
-  \\
-  while window.running: \\
-      canvas.set_image(pixels) \\
-      window.show()}
+  \begin{lstlisting}[language=Python]
+  pixels = ti.Vector.field(3, float, (640, 480))
+  window = ti.ui.Window("Window Title", (640, 360))
+  canvas = window.get_canvas()
+ 
+  while window.running:
+      canvas.set_image(pixels)
+      window.show()
+  \end{lstlisting}
   \end{myboxed}
   %
   \vspace{\fill}
   %
   % --- Performance Tuning ---------------------------------------------------------------
-  \begin{myboxed}{Performance Tuning \hfill}
+  \begin{myboxed}{Performance Tuning}
 
-  \textbf{\verb|kernel_profiler| (CPU and CUDA only):}
+  \textbf{Kernel profiler (CPU and CUDA only):}
 
   To analyzes the performance of Taichi kernels
-  {\ttfamily \scriptsize
-  ti.init(ti.cpu, kernel_profiler=True) \\
-  ti.profiler.print_kernel_profiler_info()} 
+  \begin{lstlisting}[language=Python]
+  ti.init(ti.cpu, kernel_profiler=True)
+  ti.profiler.print_kernel_profiler_info()
+  \end{lstlisting}
 
-  \textbf{verb|loop_config()|:}
+  \textbf{Configure loops:}
 
   To serialize the outermost for loop that immediately follows it
-  {\ttfamily \scriptsize
-  ti.loop_config(serialize=True)}
+  \begin{lstlisting}[language=Python]
+  ti.loop_config(serialize=True)
+  \end{lstlisting}
   To designate the number of threads on the CPU backend
-  {\ttfamily \scriptsize
-  ti.loop_config(parallelize=8)}
+  \begin{lstlisting}[language=Python]
+  ti.loop_config(parallelize=8)
+  \end{lstlisting}
   To designate the number of threads in each block of the GPU backend
-  {\ttfamily \scriptsize
-  ti.loop_config(block_dim=16)}
+  \begin{lstlisting}[language=Python]
+  ti.loop_config(block_dim=16)
+  \end{lstlisting}
   \end{myboxed}
   %
   \vspace{\fill}
   %
   % --- Debugging ---------------------------------------------------------------
-  \begin{myboxed}{Debugging \hfill}
+  \begin{myboxed}{Debugging}
 
   \textbf{Activate debug mode:}
   {\ttfamily \scriptsize
   ti.init(arch=ti.cpu, debug=True)}
 
-  \textbf{Runtime \verb|print| in Taichi scope:}
-  {\ttfamily \scriptsize
-  @ti.kernel \\
-  def inside_taichi_scope(): \\
-      x = 256 \\
-      print('hello', x) #=> hello 256}
+  \textbf{Runtime print in Taichi scope:}
+  \begin{lstlisting}[language=Python]
+  @ti.kernel
+  def inside_taichi_scope():
+      x = 256
+      print('hello', x) #=> hello 256
+  \end{lstlisting}
   
-  \textbf{Runtime \verb|assert| in Taichi scope:}
-  {\ttfamily \scriptsize
-  ti.init(arch=ti.cpu, debug=True) \\
-  \\
-  x = ti.field(ti.f32, 128) \\
-  \\
-  @ti.kernel \\
-  def do_sqrt_all(): \\
-      for i in x: \\
-          assert x[i] >= 0 \\
-          x[i] = ti.sqrt(x[i])}
+  \textbf{Runtime assert in Taichi scope:}
+  \begin{lstlisting}[language=Python]
+  ti.init(arch=ti.cpu, debug=True)
+ 
+  x = ti.field(ti.f32, 128)
+ 
+  @ti.kernel
+  def do_sqrt_all():
+      for i in x:
+          assert x[i] >= 0
+          x[i] = ti.sqrt(x[i])
+  \end{lstlisting}
   
-  \textbf{Compile-time \verb|ti.static_print|:}
-  {\ttfamily \scriptsize
-  x = ti.field(ti.f32, (2, 3)) \\
-  y = 1 \\
-  \\
-  @ti.kernel \\
-  def inside_taichi_scope(): \\
-      ti.static_print(y) # => 1 \\
-      ti.static_print(x.shape) # => (2, 3) \\
-      ti.static_print(x.dtype) # => DataType.float32}
+  \textbf{Compile-time static-print:}
+  \begin{lstlisting}[language=Python]
+  x = ti.field(ti.f32, (2, 3))
+  y = 1
+ 
+  @ti.kernel
+  def inside_taichi_scope():
+      ti.static_print(y) # => 1
+      ti.static_print(x.shape) # => (2, 3)
+      ti.static_print(x.dtype) # => DataType.float32
+  \end{lstlisting}
   
-  \textbf{Compile-time \verb|ti.static_assert|:}
-  {\ttfamily \scriptsize
-  @ti.func \\
-  def copy(dst: ti.template(), src: ti.template()): \\
-      ti.static_assert(dst.shape == src.shape, "copy() needs src and dst fields to be same shape") \\
-      for I in ti.grouped(src): \\
-          dst[I] = src[I]}
+  \textbf{Compile-time static-assert|:}
+  \begin{lstlisting}[language=Python]
+  @ti.func
+  def copy(dst: ti.template(), src: ti.template()):
+      ti.static_assert(dst.shape == src.shape, "copy() needs src and dst fields to be same shape")
+      for I in ti.grouped(src):
+          dst[I] = src[I]
+  \end{lstlisting}
   
   \textbf{Serial execution:}
 
   To serialize the program
-  {\ttfamily \scriptsize
-  ti.init(arch=ti.cpu, cpu_max_num_threads=1)}
+  \begin{lstlisting}[language=Python]
+  ti.init(arch=ti.cpu, cpu_max_num_threads=1)
+  \end{lstlisting}
   To serializes the for loop that immediately follows the line
-  {\ttfamily \scriptsize
-  ti.loop_config(serialize=True)}
+  \begin{lstlisting}[language=Python]
+  ti.loop_config(serialize=True)
+  \end{lstlisting}
 
   \textbf{Access a conciser version of traceback messages:}
-  {\ttfamily \scriptsize
-  import sys \\
-  sys.tracebacklimit = 0}
+  \begin{lstlisting}[language=Python]
+  import sys
+  sys.tracebacklimit = 0
+  \end{lstlisting}
   \end{myboxed}
   %
   \vspace{\fill}
   %
-
+% ---------------------------------------------------------------------
 \end{multicols*}
+
 \end{document}
