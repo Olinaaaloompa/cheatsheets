@@ -597,36 +597,44 @@
     | >{\centering\arraybackslash}X 
     | >{\centering\arraybackslash}X | }
     {\ttfamily \scriptsize
-    ti.acos(x) \\
-    ti.asin(x) \\
-    ti.atan2(x) \\
-    ti.ceil(x) \\
-    ti.clamp(x, xmin, xmax) \\
-    ti.cos(x) \\
-    ti.cross(x, y) \\
-    ti.dot(x,y) \\
-    ti.exp(x) \\
-    ti.floor(x)}                   & {\ttfamily \scriptsize
-    ti.fract(x) \\
-    ti.inverse(mat) \\
-    ti.norm(x) \\
-    ti.log(x) \\
-    ti.max(x, y, ...) \\
-    ti.min(x, y, ...) \\
-    tm.mix(x, y, a) \\
-    tm.mod(x,y) \\
-    tm.normalize(x) \\
-    tm.pow(x, a)}                 & {\ttfamily \scriptsize
-    ti.round(x) \\
-  ti.sign(x) \\
-  ti.sin(x) \\
-  tm.smoothstep(e0, e1, x) \\
-  ti.sqrt(x) \\
-  tm.step(edge, x) \\
-  ti.tan(x) \\
-  ti.tanh(x) \\
-  tm.degrees(x) \\
-  tm.radians(x)} \\
+    \begin{itemize}
+        \item ti.acos(x)
+        \item ti.asin(x)
+        \item ti.atan2(x)
+        \item ti.ceil(x)
+        \item ti.clamp(x, xmin, xmax)
+        \item ti.cos(x)
+        \item ti.cross(x, y)
+        \item ti.dot(x,y)
+        \item ti.exp(x)
+        \item ti.floor(x)
+    \end{itemize}}                   & 
+    {\ttfamily \scriptsize
+    \begin{itemize}
+        \item ti.fract(x)
+        \item ti.inverse(mat)
+        \item ti.norm(x)
+        \item ti.log(x)
+        \item ti.max(x, y, ...)
+        \item ti.min(x, y, ...)
+        \item tm.mod(x,y)
+        \item tm.normalize(x)
+        \item tm.pow(x, a)
+    \end{itemize}}                 & 
+    {\ttfamily \scriptsize
+    \begin{itemize}
+        \item ti.round(x)
+        \item ti.sign(x)
+        \item ti.sin(x)
+        \item tm.smoothstep(e0, e1, x)
+        \item ti.sqrt(x)
+        \item tm.step(edge, x)
+        \item ti.tan(x)
+        \item ti.tanh(x)
+        \item tm.degrees(x)
+        \item tm.radians(x)
+    \end{itemize}}\\
+    \hline
   \end{tabularx}
   \end{center}
 
@@ -722,7 +730,7 @@
   % --- Debugging ---------------------------------------------------------------
   \begin{myboxed}{Debugging \hfill}
 
-  \textbf{Activate debug mode:}}
+  \textbf{Activate debug mode:}
   {\ttfamily \scriptsize
   ti.init(arch=ti.cpu, debug=True)}
 
